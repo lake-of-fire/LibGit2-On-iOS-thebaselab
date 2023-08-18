@@ -18,6 +18,8 @@ XCFRAMEWORK_PLATFORMS=(iphoneos iphonesimulator maccatalyst)
 # List of platforms that need to be merged using lipo due to presence of multiple architectures
 LIPO_PLATFORMS=(iphonesimulator maccatalyst)
 
+MIN_IOS_VERSION="13.0"
+MIN_MAC_VERSION="10.11"
 ### Setup common environment variables to run CMake for a given platform
 ### Usage:      setup_variables PLATFORM
 ### where PLATFORM is the platform to build for and should be one of
@@ -47,17 +49,17 @@ function setup_variables() {
 			ARCH=arm64
 			SYSROOT=`xcodebuild -version -sdk iphoneos Path`
 			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH \
-				-DCMAKE_OSX_SYSROOT=$SYSROOT);;
+				-DCMAKE_OSX_SYSROOT=$SYSROOT -DCMAKE_OSX_DEPLOYMENT_TARGET=$MIN_IOS_VERSION);;
 
 		"iphonesimulator")
 			ARCH=x86_64
 			SYSROOT=`xcodebuild -version -sdk iphonesimulator Path`
-			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH -DCMAKE_OSX_SYSROOT=$SYSROOT);;
+			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH -DCMAKE_OSX_SYSROOT=$SYSROOT -DCMAKE_OSX_DEPLOYMENT_TARGET=$MIN_IOS_VERSION);;
 
 		"iphonesimulator-arm64")
 			ARCH=arm64
 			SYSROOT=`xcodebuild -version -sdk iphonesimulator Path`
-			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH -DCMAKE_OSX_SYSROOT=$SYSROOT);;
+			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH -DCMAKE_OSX_SYSROOT=$SYSROOT -DCMAKE_OSX_DEPLOYMENT_TARGET=$MIN_IOS_VERSION);;
 
 		"maccatalyst")
 			ARCH=x86_64
@@ -71,12 +73,14 @@ function setup_variables() {
 
 		"macosx")
 			ARCH=x86_64
-			SYSROOT=`xcodebuild -version -sdk macosx Path`;;
+			SYSROOT=`xcodebuild -version -sdk macosx Path`
+			CMAKE_ARGS+=(-DCMAKE_OSX_DEPLOYMENT_TARGET=$MIN_MAC_VERSION)
+			;;
 
 		"macosx-arm64")
 			ARCH=arm64
 			SYSROOT=`xcodebuild -version -sdk macosx Path`
-			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH);;
+			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH -DCMAKE_OSX_DEPLOYMENT_TARGET=$MIN_MAC_VERSION);;
 
 		*)
 			echo "Unsupported or missing platform! Must be one of" ${AVAILABLE_PLATFORMS[@]}
@@ -116,11 +120,11 @@ function build_openssl() {
 	case $PLATFORM in
 		"iphoneos")
 			TARGET_OS=ios64-cross
-			export CFLAGS="-isysroot $SYSROOT -arch $ARCH";;
+			export CFLAGS="-isysroot $SYSROOT -arch $ARCH -miphoneos-version-min=$MIN_IOS_VERSION";;
 
 		"iphonesimulator"|"iphonesimulator-arm64")
 			TARGET_OS=iossimulator-xcrun
-			export CFLAGS="-isysroot $SYSROOT -arch $ARCH";;
+			export CFLAGS="-isysroot $SYSROOT -arch $ARCH -miphonesimulator-version-min=$MIN_IOS_VERSION";;
 
 		"maccatalyst"|"maccatalyst-arm64")
 			TARGET_OS=darwin64-$ARCH-cc
@@ -128,7 +132,7 @@ function build_openssl() {
 
 		"macosx"|"macosx-arm64")
 			TARGET_OS=darwin64-$ARCH-cc
-			export CFLAGS="-isysroot $SYSROOT";;
+			export CFLAGS="-isysroot $SYSROOT -mmacosx-version-min=$MIN_MAC_VERSION";;
 
 		*)
 			echo "Unsupported or missing platform!";;
