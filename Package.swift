@@ -1,10 +1,10 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.9
 
 import PackageDescription
 
 let package = Package(
 	name: "Clibgit2",
-	platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v13), .macOS(.v10_15)],
 	products: [
 		.library(
 			name: "Clibgit2",
@@ -15,8 +15,8 @@ let package = Package(
 	targets: [
 		.binaryTarget(
 			name: "Clibgit2",
-			url: "https://github.com/thebaselab/LibGit2-On-iOS/releases/download/v1.3.1-p2/Clibgit2.xcframework.zip",
-			checksum: "a884105f9be9b56d867236c1919772e9ec2d2b786b96c5d91c5beeac08ed7b2d"
+			url: "https://github.com/lake-of-fire/LibGit2-On-iOS-thebaselab/releases/download/v1.3.1b/Clibgit2.xcframework.zip",
+			checksum: "ab2a2a7e4d353818c8c8610f68ee437f3f2c873c99be7bc13e323d8f116347c3"
 		),
 	]
 )
