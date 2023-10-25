@@ -18,6 +18,7 @@ let package = Package(
             .linkedLibrary("z"),
             .linkedLibrary("iconv"),
             .linkedFramework("Security"),
+            .linkedFramework("CoreFoundation"),
         ])
 	]
 )
