@@ -18,8 +18,8 @@ XCFRAMEWORK_PLATFORMS=(iphoneos iphonesimulator macosx) # maccatalyst
 # List of platforms that need to be merged using lipo due to presence of multiple architectures
 LIPO_PLATFORMS=(iphonesimulator macosx) # maccatalyst
 
-MIN_IOS_VERSION="13.0"
-MIN_MAC_VERSION="10.11"
+MIN_IOS_VERSION="15.0"
+MIN_MAC_VERSION="12.0"
 ### Setup common environment variables to run CMake for a given platform
 ### Usage:      setup_variables PLATFORM
 ### where PLATFORM is the platform to build for and should be one of
@@ -221,7 +221,8 @@ function copy_modulemap() {
     local FWDIRS=$(find Clibgit2.xcframework -mindepth 1 -maxdepth 1 -type d)
     for d in ${FWDIRS[@]}; do
         echo $d
-        cp Clibgit2_modulemap $d/Headers/module.modulemap
+        mkdir -p $d/Headers/git2
+        cp Clibgit2_modulemap $d/Headers/git2/module.modulemap
     done
 }
 
