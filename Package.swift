@@ -17,7 +17,7 @@ let package = Package(
         .target(name: "LinkerConfigurator", linkerSettings: [
             .linkedLibrary("z"),
             .linkedLibrary("iconv"),
-            .linkedLibrary("openssl"),
+            .linkedLibrary("ssl"),
         ])
 	]
 )
