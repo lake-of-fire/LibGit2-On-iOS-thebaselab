@@ -11,12 +11,15 @@ export PATH=$PATH:$REPO_ROOT/tools/bin
 # List of platforms-architecture that we support
 # Note that there are limitations in `xcodebuild` command that disallows `maccatalyst` and `macosx` (native macOS lib) in the same xcframework.
 AVAILABLE_PLATFORMS=(iphoneos iphonesimulator iphonesimulator-arm64 macosx macosx-arm64) # maccatalyst maccatalyst-arm64
+#AVAILABLE_PLATFORMS=( macosx macosx-arm64) # maccatalyst maccatalyst-arm64
 
 # List of frameworks included in the XCFramework (= AVAILABLE_PLATFORMS without architecture specifications)
 XCFRAMEWORK_PLATFORMS=(iphoneos iphonesimulator macosx) # maccatalyst
+#XCFRAMEWORK_PLATFORMS=(macosx) # maccatalyst
 
 # List of platforms that need to be merged using lipo due to presence of multiple architectures
 LIPO_PLATFORMS=(iphonesimulator macosx) # maccatalyst
+#LIPO_PLATFORMS=(macosx) # maccatalyst
 
 MIN_IOS_VERSION="15.0"
 MIN_MAC_VERSION="12.0"
@@ -93,7 +96,7 @@ function build_libpcre() {
 	setup_variables $1
 
 	rm -rf pcre-8.45
-	git clone https://github.com/light-tech/PCRE.git pcre-8.45
+	git clone --depth=1 https://github.com/light-tech/PCRE.git pcre-8.45
 	cd pcre-8.45
 
 	rm -rf build && mkdir build && cd build
@@ -222,10 +225,12 @@ function copy_modulemap() {
     for d in ${FWDIRS[@]}; do
         echo $d
         mkdir -p $d/Headers2/git2
-        mv $d/Headers/* $d/Headers2/git2/
+        mv $d/Headers/*.h $d/Headers2/git2/
+        mv $d/Headers/openssl $d/Headers2/git2/
+        mv $d/Headers/git2 $d/Headers2/git2/
+        cp Clibgit2_modulemap $d/Headers2/git2/module.modulemap
         rm -rdf $d/Headers/
         mv $d/Headers2 $d/Headers
-        cp Clibgit2_modulemap $d/Headers/git2/module.modulemap
     done
 }
 
