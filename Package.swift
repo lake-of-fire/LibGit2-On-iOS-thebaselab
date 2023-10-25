@@ -16,7 +16,8 @@ let package = Package(
         .binaryTarget(name: "Clibgit2", path: "Clibgit2.xcframework"),
         .target(name: "LinkerConfigurator", linkerSettings: [
             .linkedLibrary("z"),
-            .linkedLibrary("iconv")
+            .linkedLibrary("iconv"),
+            .linkedLibrary("ssh2"),
         ])
 	]
 )
