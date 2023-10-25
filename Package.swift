@@ -11,10 +11,14 @@ let package = Package(
 			targets: [ "Clibgit2", "LinkerConfigurator" ]
 		),
 	],
-	dependencies: [],
+	dependencies: [
+        .package(url: "https://github.com/krzyzanowskim/OpenSSL.git", .upToNextMinor(from: "3.1.3000")),
+    ],
 	targets: [
         .binaryTarget(name: "Clibgit2", path: "Clibgit2.xcframework"),
-        .target(name: "LinkerConfigurator", linkerSettings: [
+        .target(name: "LinkerConfigurator", dependencies: [
+            "OpenSSL",
+        ], linkerSettings: [
             .linkedLibrary("z"),
             .linkedLibrary("iconv"),
             .linkedFramework("Security"),
