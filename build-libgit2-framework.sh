@@ -24,7 +24,7 @@ LIPO_PLATFORMS=(iphonesimulator macosx) # maccatalyst
 #LIPO_PLATFORMS=(macosx) # maccatalyst
 
 MIN_IOS_VERSION="15.0"
-MIN_MAC_VERSION="12.0"
+MIN_MAC_VERSION="12.4"
 ### Setup common environment variables to run CMake for a given platform
 ### Usage:      setup_variables PLATFORM
 ### where PLATFORM is the platform to build for and should be one of
