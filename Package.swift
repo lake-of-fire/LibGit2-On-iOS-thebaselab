@@ -18,7 +18,7 @@ let package = Package(
         .binaryTarget(name: "Clibgit2", path: "Clibgit2.xcframework"),
         .target(name: "LinkerConfigurator", dependencies: [
 //            "OpenSSL",
-        ], linkerSettings: [
+        ], swiftSettings: [.interoperabilityMode(.C)], linkerSettings: [
             .linkedLibrary("z"),
             .linkedLibrary("iconv"),
 //            .linkedFramework("CoreFoundation"),
