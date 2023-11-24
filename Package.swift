@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "Clibgit2",
-    platforms: [.iOS(.v15), .macOS(.v12)],
+    platforms: [.iOS(.v16), .macOS(.v13)],
     products: [
         .library(
             name: "Clibgit2",
@@ -21,7 +21,7 @@ let package = Package(
             dependencies: [
                 //            "OpenSSL",
             ],
-            swiftSettings: [.interoperabilityMode(.Cxx)],
+            swiftSettings: [.interoperabilityMode(.C)],
             linkerSettings: [
                 .linkedLibrary("z"),
                 .linkedLibrary("iconv"),
