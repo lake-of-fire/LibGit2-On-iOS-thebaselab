@@ -9,6 +9,10 @@
 
 #include "common.h"
 
+#include <sys/types.h>
+#include "buffer.h"
+#include "oid.h"
+
 /**
  * @file git2/types.h
  * @brief libgit2 base & compatibility types
@@ -31,7 +35,6 @@ GIT_BEGIN_DECL
  * NOTE: These types should match those that are returned by our internal
  * stat() functions, for all platforms.
  */
-#include <sys/types.h>
 #ifdef __amigaos4__
 #include <stdint.h>
 #endif
@@ -65,9 +68,6 @@ typedef int64_t git_time_t; /**< time in seconds from epoch */
 
 /** The maximum size of an object */
 typedef uint64_t git_object_size_t;
-
-#include "buffer.h"
-#include "oid.h"
 
 /** Basic type (loose or packed) of any Git object. */
 typedef enum {

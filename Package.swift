@@ -21,7 +21,7 @@ let package = Package(
             dependencies: [
                 //            "OpenSSL",
             ],
-            swiftSettings: [.interoperabilityMode(.C)],
+            swiftSettings: [.interoperabilityMode(.Cxx)],
             linkerSettings: [
                 .linkedLibrary("z"),
                 .linkedLibrary("iconv"),

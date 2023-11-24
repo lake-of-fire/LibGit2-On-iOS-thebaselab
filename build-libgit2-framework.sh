@@ -23,8 +23,8 @@ XCFRAMEWORK_PLATFORMS=(iphoneos iphonesimulator macosx) # maccatalyst
 LIPO_PLATFORMS=(iphonesimulator macosx) # maccatalyst
 #LIPO_PLATFORMS=(macosx) # maccatalyst
 
-MIN_IOS_VERSION="15.0"
-MIN_MAC_VERSION="12.4"
+MIN_IOS_VERSION="16.0"
+MIN_MAC_VERSION="13.0"
 ### Setup common environment variables to run CMake for a given platform
 ### Usage:      setup_variables PLATFORM
 ### where PLATFORM is the platform to build for and should be one of
@@ -179,10 +179,10 @@ function build_libssh2() {
 function build_libgit2() {
     setup_variables $1
 
-    rm -rf libgit2-1.3.1
-    test -f v1.3.1.zip || wget -q https://github.com/libgit2/libgit2/archive/refs/tags/v1.3.1.zip
-    ditto -V -x -k --sequesterRsrc --rsrc v1.3.1.zip ./ >/dev/null 2>/dev/null
-    cd libgit2-1.3.1
+    rm -rf libgit2-1.3cpp
+    test -f v1.3cpp.zip || wget -q https://github.com/lake-of-fire/libgit2/archive/refs/heads/v1.3cpp.zip
+    ditto -V -x -k --sequesterRsrc --rsrc v1.3cpp.zip ./ >/dev/null 2>/dev/null
+    cd libgit2-1.3cpp
 
     rm -rf build && mkdir build && cd build
 
